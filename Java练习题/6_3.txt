@@ -1,0 +1,22 @@
+class RPentagon extends shape
+{
+
+	double a;
+	public RPentagon(double side) {
+		// TODO Auto-generated constructor stub
+		this.a=side;
+	}
+
+	@Override
+	public double getArea() {
+		// TODO Auto-generated method stub
+		return (5*a*a*Math.tan(Math.toRadians(54)))/4;
+	}
+
+	@Override
+	public double getPerimeter() {
+		// TODO Auto-generated method stub
+		return 5*a;
+	}
+	
+}
