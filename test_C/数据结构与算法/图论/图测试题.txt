@@ -1,0 +1,16 @@
+5
+7
+ABCDE
+
+
+
+
+5 7
+ABCDE
+AB
+AE
+BC
+CD
+DA
+DB
+EC

@@ -1,0 +1,981 @@
+ 
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Ellipse;
+
+public class LabelWithGraphic extends Application {
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {
+    ImageView us = new ImageView(new Image("image/us.gif"));
+    Label lb1 = new Label("US\n50 States", us);
+    lb1.setStyle("-fx-border-color: green; -fx-border-width: 2");
+    lb1.setContentDisplay(ContentDisplay.BOTTOM);
+    lb1.setTextFill(Color.RED);
+    
+    Label lb2 = new Label("Circle", new Circle(50, 50, 25));
+    lb2.setContentDisplay(ContentDisplay.TOP);
+    lb2.setTextFill(Color.ORANGE);
+
+    Label lb3 = new Label("Rectangle", new Rectangle(10, 10, 50, 25));
+    lb3.setContentDisplay(ContentDisplay.RIGHT);
+    
+    Label lb4 = new Label("Ellipse", new Ellipse(50, 50, 50, 25));
+    lb4.setContentDisplay(ContentDisplay.LEFT);
+
+    Ellipse ellipse = new Ellipse(50, 50, 50, 25);
+    ellipse.setStroke(Color.GREEN);
+    ellipse.setFill(Color.WHITE);
+    StackPane stackPane = new StackPane();
+    stackPane.getChildren().addAll(ellipse, new Label("JavaFX"));
+    Label lb5 = new Label("A pane inside a label", stackPane);
+    lb5.setContentDisplay(ContentDisplay.BOTTOM);
+    
+    HBox pane = new HBox(20);
+    pane.getChildren().addAll(lb1, lb2, lb3, lb4, lb5);
+
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(pane, 450, 150);
+    primaryStage.setTitle("LabelWithGraphic"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+ 
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
+
+public class ButtonDemo extends Application {
+  protected Text text = new Text(50, 50, "JavaFX Programming");
+  
+  protected BorderPane getPane() {
+    HBox paneForButtons = new HBox(20);
+    Button btLeft = new Button("Left", 
+      new ImageView("image/left.gif"));
+    Button btRight = new Button("Right", 
+      new ImageView("image/right.gif"));   
+    paneForButtons.getChildren().addAll(btLeft, btRight);
+    paneForButtons.setAlignment(Pos.CENTER);
+    paneForButtons.setStyle("-fx-border-color: green");
+
+    BorderPane pane = new BorderPane();
+    pane.setBottom(paneForButtons);
+    
+    Pane paneForText = new Pane();
+    paneForText.getChildren().add(text);
+    pane.setCenter(paneForText);
+    
+    btLeft.setOnAction(e -> text.setX(text.getX() - 10));
+    btRight.setOnAction(e -> text.setX(text.getX() + 10));
+    
+    return pane;
+  }
+  
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(getPane(), 450, 200);
+    primaryStage.setTitle("ButtonDemo"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+
+  
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.scene.control.CheckBox;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+
+public class CheckBoxDemo extends ButtonDemo {
+  @Override // Override the getPane() method in the super class
+  protected BorderPane getPane() {
+    BorderPane pane = super.getPane();
+
+    Font fontBoldItalic = Font.font("Times New Roman", 
+      FontWeight.BOLD, FontPosture.ITALIC, 20);
+    Font fontBold = Font.font("Times New Roman", 
+      FontWeight.BOLD, FontPosture.REGULAR, 20);
+    Font fontItalic = Font.font("Times New Roman", 
+      FontWeight.NORMAL, FontPosture.ITALIC, 20);
+    Font fontNormal = Font.font("Times New Roman", 
+      FontWeight.NORMAL, FontPosture.REGULAR, 20);
+    
+    text.setFont(fontNormal);
+    
+    VBox paneForCheckBoxes = new VBox(20);
+    paneForCheckBoxes.setPadding(new Insets(5, 5, 5, 5)); 
+    paneForCheckBoxes.setStyle("-fx-border-color: green");
+    CheckBox chkBold = new CheckBox("Bold");
+    CheckBox chkItalic = new CheckBox("Italic");
+    paneForCheckBoxes.getChildren().addAll(chkBold, chkItalic);
+    pane.setRight(paneForCheckBoxes);
+
+    EventHandler<ActionEvent> handler = e -> { 
+      if (chkBold.isSelected() && chkItalic.isSelected()) {
+        text.setFont(fontBoldItalic); // Both check boxes checked
+      }
+      else if (chkBold.isSelected()) {
+        text.setFont(fontBold); // The Bold check box checked
+      }
+      else if (chkItalic.isSelected()) {
+        text.setFont(fontItalic); // The Italic check box checked
+      }      
+      else {
+        text.setFont(fontNormal); // Both check boxes unchecked
+      }
+    };
+    
+    chkBold.setOnAction(handler);
+    chkItalic.setOnAction(handler);
+    
+    return pane; // Return a new pane
+  }
+  
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+  
+import javafx.geometry.Insets;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+
+public class RadioButtonDemo extends CheckBoxDemo {
+  @Override // Override the getPane() method in the super class
+  protected BorderPane getPane() {
+    BorderPane pane = super.getPane();
+    
+    VBox paneForRadioButtons = new VBox(20);
+    paneForRadioButtons.setPadding(new Insets(5, 5, 5, 5)); 
+    paneForRadioButtons.setStyle
+      ("-fx-border-width: 2px; -fx-border-color: green");
+    
+    RadioButton rbRed = new RadioButton("Red");
+    RadioButton rbGreen = new RadioButton("Green");
+    RadioButton rbBlue = new RadioButton("Blue");
+    paneForRadioButtons.getChildren().addAll(rbRed, rbGreen, rbBlue);
+    pane.setLeft(paneForRadioButtons);
+
+    ToggleGroup group = new ToggleGroup();
+    rbRed.setToggleGroup(group);
+    rbGreen.setToggleGroup(group);
+    rbBlue.setToggleGroup(group);
+    
+    rbRed.setOnAction(e -> {
+      if (rbRed.isSelected()) {
+        text.setFill(Color.RED);
+      }
+    });
+    
+    rbGreen.setOnAction(e -> {
+      if (rbGreen.isSelected()) {
+        text.setFill(Color.GREEN);
+      }
+    });
+
+    rbBlue.setOnAction(e -> {
+      if (rbBlue.isSelected()) {
+        text.setFill(Color.BLUE);
+      }
+    });
+    
+    return pane;
+  }
+
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+  
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+
+public class TextFieldDemo extends RadioButtonDemo {
+  @Override // Override the getPane() method in the super class
+  protected BorderPane getPane() {
+    BorderPane pane = super.getPane();
+    
+    BorderPane paneForTextField = new BorderPane();
+    paneForTextField.setPadding(new Insets(5, 5, 5, 5)); 
+    paneForTextField.setStyle("-fx-border-color: green");
+    paneForTextField.setLeft(new Label("Enter a new message: "));
+    
+    TextField tf = new TextField();
+    tf.setAlignment(Pos.BOTTOM_RIGHT);
+    paneForTextField.setCenter(tf);
+    pane.setTop(paneForTextField);
+    
+    tf.setOnAction(e -> text.setText(tf.getText()));
+    
+    return pane;
+  }
+
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+
+ 
+import javafx.geometry.Insets;
+import javafx.scene.control.Label;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Font;
+
+public class DescriptionPane extends BorderPane {
+  /** Label for displaying an image and a title */
+  private Label lblImageTitle = new Label();
+
+  /** Text area for displaying text */
+  private TextArea taDescription = new TextArea();
+  
+  public DescriptionPane() {
+    // Center the icon and text and place the text under the icon
+    lblImageTitle.setContentDisplay(ContentDisplay.TOP);
+    lblImageTitle.setPrefSize(200,  100);
+    
+    // Set the font in the label and the text field
+    lblImageTitle.setFont(new Font("SansSerif", 16));
+    taDescription.setFont(new Font("Serif", 14));
+    
+    taDescription.setWrapText(true);
+    taDescription.setEditable(false);
+
+    // Create a scroll pane to hold the text area
+    ScrollPane scrollPane = new ScrollPane(taDescription);
+
+    // Place label and scroll pane in the border pane
+    setLeft(lblImageTitle);
+    setCenter(scrollPane);
+    setPadding(new Insets(5, 5, 5, 5));
+  }
+  
+  /** Set the title */
+  public void setTitle(String title) {
+    lblImageTitle.setText(title);
+  }
+
+  /** Set the image view */
+  public void setImageView(ImageView icon) {
+    lblImageTitle.setGraphic(icon);
+  }
+
+  /** Set the text description */
+  public void setDescription(String text) {
+    taDescription.setText(text);
+  }
+}
+
+
+ 
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
+
+public class TextAreaDemo extends Application {
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {
+    // Declare and create a description pane
+    DescriptionPane descriptionPane = new DescriptionPane();
+
+    // Set title, text and image in the description pane
+    descriptionPane.setTitle("Canada");
+    String description = "The Canadian national flag ...";
+    descriptionPane.setImageView(new ImageView("image/ca.gif"));
+    descriptionPane.setDescription(description);
+
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(descriptionPane, 450, 200);
+    primaryStage.setTitle("TextAreaDemo"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+
+ 
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+
+public class ComboBoxDemo extends Application {
+  // Declare an array of Strings for flag titles
+  private String[] flagTitles = {"Canada", "China", "Denmark", 
+    "France", "Germany", "India", "Norway", "United Kingdom",
+    "United States of America"};
+
+  // Declare an ImageView array for the national flags of 9 countries
+  private ImageView[] flagImage = {new ImageView("image/ca.gif"),
+    new ImageView("image/china.gif"), 
+    new ImageView("image/denmark.gif"), 
+    new ImageView("image/fr.gif"), 
+    new ImageView("image/germany.gif"),
+    new ImageView("image/india.gif"), 
+    new ImageView("image/norway.gif"),
+    new ImageView("image/uk.gif"), new ImageView("image/us.gif")};
+
+  // Declare an array of strings for flag descriptions
+  private String[] flagDescription = new String[9];
+
+  // Declare and create a description pane
+  private DescriptionPane descriptionPane = new DescriptionPane();
+
+  // Create a combo box for selecting countries
+  private ComboBox<String> cbo = new ComboBox<>(); // flagTitles
+
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {
+    // Set text description
+    flagDescription[0] = "The Canadian national flag ...";
+    flagDescription[1] = "Description for China ... ";
+    flagDescription[2] = "Description for Denmark ... ";
+    flagDescription[3] = "Description for France ... ";
+    flagDescription[4] = "Description for Germany ... ";
+    flagDescription[5] = "Description for India ... ";
+    flagDescription[6] = "Description for Norway ... ";
+    flagDescription[7] = "Description for UK ... ";
+    flagDescription[8] = "Description for US ... ";
+
+    // Set the first country (Canada) for display
+    setDisplay(0);
+
+    // Add combo box and description pane to the border pane
+    BorderPane pane = new BorderPane();
+      
+    BorderPane paneForComboBox = new BorderPane();
+    paneForComboBox.setLeft(new Label("Select a country: "));
+    paneForComboBox.setCenter(cbo);
+    pane.setTop(paneForComboBox);
+    cbo.setPrefWidth(400);
+    cbo.setValue("Canada");
+    
+    ObservableList<String> items = 
+      FXCollections.observableArrayList(flagTitles);
+    cbo.getItems().addAll(items); 
+    pane.setCenter(descriptionPane);
+    
+    // Display the selected country
+    cbo.setOnAction(e -> setDisplay(items.indexOf(cbo.getValue())));
+    
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(pane, 450, 170);
+    primaryStage.setTitle("ComboBoxDemo"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+
+  /** Set display information on the description pane */
+  public void setDisplay(int index) {
+    descriptionPane.setTitle(flagTitles[index]);
+    descriptionPane.setImageView(flagImage[index]);
+    descriptionPane.setDescription(flagDescription[index]);
+  }
+
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+
+ 
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.collections.FXCollections;
+import javafx.scene.Scene;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
+
+public class ListViewDemo extends Application {
+  // Declare an array of Strings for flag titles
+  private String[] flagTitles = {"Canada", "China", "Denmark",
+    "France", "Germany", "India", "Norway", "United Kingdom",
+    "United States of America"};
+
+  // Declare an ImageView array for the national flags of 9 countries
+  private ImageView[] ImageViews = {
+    new ImageView("image/ca.gif"),
+    new ImageView("image/china.gif"),
+    new ImageView("image/denmark.gif"),
+    new ImageView("image/fr.gif"),
+    new ImageView("image/germany.gif"),
+    new ImageView("image/india.gif"),
+    new ImageView("image/norway.gif"),
+    new ImageView("image/uk.gif"),
+    new ImageView("image/us.gif")
+  };
+
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {
+    ListView<String> lv = new ListView<>
+      (FXCollections.observableArrayList(flagTitles));
+    lv.setPrefSize(400, 400);
+    lv.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+    
+    // Create a pane to hold image views
+    FlowPane imagePane = new FlowPane(10, 10);
+    BorderPane pane = new BorderPane();
+    pane.setLeft(new ScrollPane(lv));   
+    pane.setCenter(imagePane);
+
+    lv.getSelectionModel().selectedItemProperty().addListener(
+      ov -> { 
+        imagePane.getChildren().clear();
+        for (Integer i: lv.getSelectionModel().getSelectedIndices()) {
+          imagePane.getChildren().add(ImageViews[i]);
+        }
+    });
+
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(pane, 450, 170);
+    primaryStage.setTitle("ListViewDemo"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+
+ 
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.geometry.Orientation;
+import javafx.scene.Scene;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
+
+public class ScrollBarDemo extends Application {
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {
+    Text text = new Text(20, 20, "JavaFX Programming");
+    
+    ScrollBar sbHorizontal = new ScrollBar();
+    ScrollBar sbVertical = new ScrollBar();
+    sbVertical.setOrientation(Orientation.VERTICAL);
+    
+    // Create a text in a pane
+    Pane paneForText = new Pane();
+    paneForText.getChildren().add(text);
+    
+    // Create a border pane to hold text and scroll bars
+    BorderPane pane = new BorderPane();
+    pane.setCenter(paneForText);
+    pane.setBottom(sbHorizontal);
+    pane.setRight(sbVertical);
+
+    // Listener for horizontal scroll bar value change
+    sbHorizontal.valueProperty().addListener(ov -> 
+      text.setX(sbHorizontal.getValue() * paneForText.getWidth() /
+        sbHorizontal.getMax()));
+    
+    // Listener for vertical scroll bar value change
+    sbVertical.valueProperty().addListener(ov -> 
+      text.setY(sbVertical.getValue() * paneForText.getHeight() /
+        sbVertical.getMax()));
+    
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(pane, 450, 170);
+    primaryStage.setTitle("ScrollBarDemo"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+ 
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.geometry.Orientation;
+import javafx.scene.Scene;
+import javafx.scene.control.Slider;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
+
+public class SliderDemo extends Application {
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {
+    Text text = new Text(20, 20, "JavaFX Programming");
+    
+    Slider slHorizontal = new Slider();
+    slHorizontal.setShowTickLabels(true);
+    slHorizontal.setShowTickMarks(true);    
+    
+    Slider slVertical = new Slider();
+    slVertical.setOrientation(Orientation.VERTICAL);
+    slVertical.setShowTickLabels(true);
+    slVertical.setShowTickMarks(true);
+    slVertical.setValue(100);
+    
+    // Create a text in a pane
+    Pane paneForText = new Pane();
+    paneForText.getChildren().add(text);
+    
+    // Create a border pane to hold text and scroll bars
+    BorderPane pane = new BorderPane();
+    pane.setCenter(paneForText);
+    pane.setBottom(slHorizontal);
+    pane.setRight(slVertical);
+
+    slHorizontal.valueProperty().addListener(ov -> 
+      text.setX(slHorizontal.getValue() * paneForText.getWidth() /
+        slHorizontal.getMax()));
+    
+    slVertical.valueProperty().addListener(ov -> 
+      text.setY((slVertical.getMax() - slVertical.getValue()) 
+        * paneForText.getHeight() / slVertical.getMax()));
+    
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(pane, 450, 170);
+    primaryStage.setTitle("SliderDemo"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage   
+  }
+
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+
+ 
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Ellipse;
+
+public class TicTacToe extends Application {
+  // Indicate which player has a turn, initially it is the X player
+  private char whoseTurn = 'X';
+
+  // Create and initialize cell
+  private Cell[][] cell =  new Cell[3][3];
+
+  // Create and initialize a status label
+  private Label lblStatus = new Label("X's turn to play");
+
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {
+    // Pane to hold cell
+    GridPane pane = new GridPane(); 
+    for (int i = 0; i < 3; i++)
+      for (int j = 0; j < 3; j++)
+        pane.add(cell[i][j] = new Cell(), j, i);
+
+    BorderPane borderPane = new BorderPane();
+    borderPane.setCenter(pane);
+    borderPane.setBottom(lblStatus);
+    
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(borderPane, 450, 170);
+    primaryStage.setTitle("TicTacToe"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage   
+  }
+
+  /** Determine if the cell are all occupied */
+  public boolean isFull() {
+    for (int i = 0; i < 3; i++)
+      for (int j = 0; j < 3; j++)
+        if (cell[i][j].getToken() == ' ')
+          return false;
+
+    return true;
+  }
+
+  /** Determine if the player with the specified token wins */
+  public boolean isWon(char token) {
+    for (int i = 0; i < 3; i++)
+      if (cell[i][0].getToken() == token
+          && cell[i][1].getToken() == token
+          && cell[i][2].getToken() == token) {
+        return true;
+      }
+
+    for (int j = 0; j < 3; j++)
+      if (cell[0][j].getToken() ==  token
+          && cell[1][j].getToken() == token
+          && cell[2][j].getToken() == token) {
+        return true;
+      }
+
+    if (cell[0][0].getToken() == token 
+        && cell[1][1].getToken() == token        
+        && cell[2][2].getToken() == token) {
+      return true;
+    }
+
+    if (cell[0][2].getToken() == token
+        && cell[1][1].getToken() == token
+        && cell[2][0].getToken() == token) {
+      return true;
+    }
+
+    return false;
+  }
+
+  // An inner class for a cell
+  public class Cell extends Pane {
+    // Token used for this cell
+    private char token = ' ';
+
+    public Cell() {
+      setStyle("-fx-border-color: black"); 
+      this.setPrefSize(800, 800);
+      this.setOnMouseClicked(e -> handleMouseClick());
+    }
+
+    /** Return token */
+    public char getToken() {
+      return token;
+    }
+
+    /** Set a new token */
+    public void setToken(char c) {
+      token = c;
+      
+      if (token == 'X') {
+        Line line1 = new Line(10, 10, 
+          this.getWidth() - 10, this.getHeight() - 10);
+        line1.endXProperty().bind(this.widthProperty().subtract(10));
+        line1.endYProperty().bind(this.heightProperty().subtract(10));
+        Line line2 = new Line(10, this.getHeight() - 10, 
+          this.getWidth() - 10, 10);
+        line2.startYProperty().bind(
+          this.heightProperty().subtract(10));
+        line2.endXProperty().bind(this.widthProperty().subtract(10));
+        
+        // Add the lines to the pane
+        this.getChildren().addAll(line1, line2); 
+      }
+      else if (token == 'O') {
+        Ellipse ellipse = new Ellipse(this.getWidth() / 2, 
+          this.getHeight() / 2, this.getWidth() / 2 - 10, 
+          this.getHeight() / 2 - 10);
+        ellipse.centerXProperty().bind(
+          this.widthProperty().divide(2));
+        ellipse.centerYProperty().bind(
+            this.heightProperty().divide(2));
+        ellipse.radiusXProperty().bind(
+            this.widthProperty().divide(2).subtract(10));        
+        ellipse.radiusYProperty().bind(
+            this.heightProperty().divide(2).subtract(10));   
+        ellipse.setStroke(Color.BLACK);
+        ellipse.setFill(Color.WHITE);
+        
+        getChildren().add(ellipse); // Add the ellipse to the pane
+      }
+    }
+
+    /* Handle a mouse click event */
+    private void handleMouseClick() {
+      // If cell is empty and game is not over
+      if (token == ' ' && whoseTurn != ' ') {
+        setToken(whoseTurn); // Set token in the cell
+
+        // Check game status
+        if (isWon(whoseTurn)) {
+          lblStatus.setText(whoseTurn + " won! The game is over");
+          whoseTurn = ' '; // Game is over
+        }
+        else if (isFull()) {
+          lblStatus.setText("Draw! The game is over");
+          whoseTurn = ' '; // Game is over
+        }
+        else {
+          // Change the turn
+          whoseTurn = (whoseTurn == 'X') ? 'O' : 'X';
+          // Display whose turn
+          lblStatus.setText(whoseTurn + "'s turn");
+        }
+      }
+    }
+  }
+  
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+
+
+ 
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import javafx.util.Duration;
+
+public class MediaDemo extends Application {
+  private static final String MEDIA_URL = 
+    "https://liveexample.pearsoncmg.com/common/sample.mp4";
+
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {
+    Media media = new Media(MEDIA_URL);
+    MediaPlayer mediaPlayer = new MediaPlayer(media);
+    MediaView mediaView = new MediaView(mediaPlayer);
+
+    Button playButton = new Button(">");
+    playButton.setOnAction(e -> {
+      if (playButton.getText().equals(">")) {
+        mediaPlayer.play();
+        playButton.setText("||");
+      } else {
+        mediaPlayer.pause();
+        playButton.setText(">");
+      }
+    });
+
+    Button rewindButton = new Button("<<");
+    rewindButton.setOnAction(e -> mediaPlayer.seek(Duration.ZERO));
+    
+    Slider slVolume = new Slider();
+    slVolume.setPrefWidth(150);
+    slVolume.setMaxWidth(Region.USE_PREF_SIZE);
+    slVolume.setMinWidth(30);
+    slVolume.setValue(50);
+    mediaPlayer.volumeProperty().bind(
+      slVolume.valueProperty().divide(100));
+
+    HBox hBox = new HBox(10);
+    hBox.setAlignment(Pos.CENTER);
+    hBox.getChildren().addAll(playButton, rewindButton,
+      new Label("Volume"), slVolume);
+
+    BorderPane pane = new BorderPane();
+    pane.setCenter(mediaView);
+    pane.setBottom(hBox);
+
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(pane, 650, 500);
+    primaryStage.setTitle("MediaDemo"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage    
+  }
+
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+
+ 
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.stage.Stage;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
+public class FlagAnthem extends Application {
+  private final static int NUMBER_OF_NATIONS = 7;
+  private final static String URLBase =
+    "https://liveexample.pearsoncmg.com/common";
+  private int currentIndex = 0;
+    
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {
+    Image[] images = new Image[NUMBER_OF_NATIONS];
+    MediaPlayer[] mp = new MediaPlayer[NUMBER_OF_NATIONS];
+
+    // Load images and audio
+    for (int i = 0; i < NUMBER_OF_NATIONS; i++) {
+      images[i] = new Image(URLBase + "/image/flag" + i + ".gif");
+      mp[i] = new MediaPlayer(new Media(
+        URLBase + "/audio/anthem/anthem" + i + ".mp3"));
+    }
+
+    Button btPlayPause = new Button("||");
+    btPlayPause.setOnAction(e -> {
+      if (btPlayPause.getText().equals(">")) {
+        btPlayPause.setText("||");
+        mp[currentIndex].play();
+      } 
+      else {
+        btPlayPause.setText(">");
+        mp[currentIndex].pause();
+      }
+    });
+
+    ImageView imageView = new ImageView(images[currentIndex]);   
+    ComboBox<String> cboNation = new ComboBox<>();
+    ObservableList<String> items = FXCollections.observableArrayList
+      ("Denmark", "Germany", "China", "India", "Norway", "UK", "US");
+    cboNation.getItems().addAll(items);
+    cboNation.setValue(items.get(0));
+    cboNation.setOnAction(e -> {
+      mp[currentIndex].stop();
+      currentIndex = items.indexOf(cboNation.getValue());
+      imageView.setImage(images[currentIndex]);
+      mp[currentIndex].play();
+      btPlayPause.setText("||");
+    });
+
+    HBox hBox = new HBox(10);
+    hBox.getChildren().addAll(btPlayPause, 
+      new Label("Select a nation: "), cboNation);
+    hBox.setAlignment(Pos.CENTER);
+
+    // Create a pane to hold nodes 
+    BorderPane pane = new BorderPane();
+    pane.setCenter(imageView);
+    pane.setBottom(hBox);
+
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(pane, 350, 270);
+    primaryStage.setTitle("FlagAnthem"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage   
+    mp[currentIndex].play(); // Play the current selected anthem
+  }
+
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+

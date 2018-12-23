@@ -1,0 +1,1002 @@
+ 
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
+
+public class MyJavaFX extends Application {
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {
+    // Create a button and place it in the scene
+    Button btOK = new Button("OK");
+    Scene scene = new Scene(btOK, 200, 250);
+    primaryStage.setTitle("MyJavaFX"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+  
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) { 
+    launch(args);
+  }
+}
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
+
+public class MultipleStageDemo extends Application {
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {
+    // Create a scene and place a button in the scene
+    Scene scene = new Scene(new Button("OK"), 200, 250);
+    primaryStage.setTitle("MyJavaFX"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+
+    Stage stage = new Stage(); // Create a new stage
+    stage.setTitle("Second Stage"); // Set the stage title
+    // Set a scene with a button in the stage
+    stage.setScene(new Scene(new Button("New Stage"), 200, 250));        
+    stage.show(); // Display the stage
+  }
+  
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+
+public class ButtonInPane extends Application {
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {
+    // Create a scene and place a button in the scene
+    StackPane pane = new StackPane();
+    pane.getChildren().add(new Button("OK"));    
+    Scene scene = new Scene(pane, 200, 50);
+    primaryStage.setTitle("Button in a pane"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+  
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+
+ 
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
+
+public class ShowCircle extends Application {
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {
+    // Create a circle and set its properties
+    Circle circle = new Circle();
+    circle.setCenterX(100);
+    circle.setCenterY(100);
+    circle.setRadius(50);
+    circle.setStroke(Color.BLACK);
+    circle.setFill(Color.WHITE);
+    
+    // Create a pane to hold the circle 
+    Pane pane = new Pane();
+    pane.getChildren().add(circle);
+    
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(pane, 200, 200);
+    primaryStage.setTitle("ShowCircle"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+  
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
+
+public class ShowCircleCentered extends Application {
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {    
+    // Create a pane to hold the circle 
+    Pane pane = new Pane();
+    
+    // Create a circle and set its properties
+    Circle circle = new Circle();
+    circle.centerXProperty().bind(pane.widthProperty().divide(2));
+    circle.centerYProperty().bind(pane.heightProperty().divide(2));
+    circle.setRadius(50);
+    circle.setStroke(Color.BLACK); 
+    circle.setFill(Color.WHITE);
+    pane.getChildren().add(circle); // Add circle to the pane
+
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(pane, 200, 200);
+    primaryStage.setTitle("ShowCircleCentered"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+  
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+
+public class BindingDemo {
+  public static void main(String[] args) {       
+    DoubleProperty d1 = new SimpleDoubleProperty(1);
+    DoubleProperty d2 = new SimpleDoubleProperty(2);
+    d1.bind(d2);
+    System.out.println("d1 is " + d1.getValue() 
+      + " and d2 is " + d2.getValue());
+    d2.setValue(70.2);
+    System.out.println("d1 is " + d1.getValue() 
+      + " and d2 is " + d2.getValue());
+  }
+}
+
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+
+public class BidirectionalBindingDemo {
+  public static void main(String[] args) {       
+    DoubleProperty d1 = new SimpleDoubleProperty(1);
+    DoubleProperty d2 = new SimpleDoubleProperty(2);
+    d1.bindBidirectional(d2);
+    System.out.println("d1 is " + d1.getValue() 
+      + " and d2 is " + d2.getValue());
+    d1.setValue(50.1);
+    System.out.println("d1 is " + d1.getValue() 
+      + " and d2 is " + d2.getValue());
+    d2.setValue(70.2);
+    System.out.println("d1 is " + d1.getValue() 
+      + " and d2 is " + d2.getValue());
+  }
+}
+
+
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
+import javafx.scene.layout.StackPane;
+
+public class NodeStyleRotateDemo extends Application {
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {
+    // Create a scene and place a button in the scene
+    StackPane pane = new StackPane();
+    Button btOK = new Button("OK");
+    btOK.setStyle("-fx-border-color: blue;");
+    pane.getChildren().add(btOK);    
+    
+    pane.setRotate(45);
+    pane.setStyle(
+      "-fx-border-color: red; -fx-background-color: lightgray;");
+    
+    Scene scene = new Scene(pane, 200, 250);
+    primaryStage.setTitle("NodeStyleRotateDemo"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+  
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.*;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
+
+public class FontDemo extends Application {
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {    
+    // Create a pane to hold the circle 
+    Pane pane = new StackPane();
+    
+    // Create a circle and set its properties
+    Circle circle = new Circle();
+    circle.setRadius(50);
+    circle.setStroke(Color.BLACK); 
+    circle.setFill(new Color(0.5, 0.5, 0.5, 0.1));
+    pane.getChildren().add(circle); // Add circle to the pane
+
+    // Create a label and set its properties
+    Label label = new Label("JavaFX");
+    label.setFont(Font.font("Times New Roman", 
+      FontWeight.BOLD, FontPosture.ITALIC, 20));
+    pane.getChildren().add(label);
+
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(pane);
+    primaryStage.setTitle("FontDemo"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+  
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.geometry.Insets;
+import javafx.stage.Stage;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+public class ShowImage extends Application {
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {
+    // Create a pane to hold the image views
+    Pane pane = new HBox(10);
+    pane.setPadding(new Insets(5, 5, 5, 5));
+    Image image = new Image("image/us.gif");
+    pane.getChildren().add(new ImageView(image));
+    
+    ImageView imageView2 = new ImageView(image);
+    imageView2.setFitHeight(100);
+    imageView2.setFitWidth(100);
+    pane.getChildren().add(imageView2);   
+
+    ImageView imageView3 = new ImageView(image);
+    imageView3.setRotate(90);
+    pane.getChildren().add(imageView3);     
+    
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(pane);
+    primaryStage.setTitle("ShowImage"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+  
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+
+
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.FlowPane;
+import javafx.stage.Stage;
+
+public class ShowFlowPane extends Application {
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {
+    // Create a pane and set its properties
+    FlowPane pane = new FlowPane();
+    pane.setPadding(new Insets(11, 12, 13, 14));
+    pane.setHgap(5);
+    pane.setVgap(5);
+
+    // Place nodes in the pane
+    pane.getChildren().addAll(new Label("First Name:"), 
+      new TextField(), new Label("MI:"));
+    TextField tfMi = new TextField();
+    tfMi.setPrefColumnCount(1);
+    pane.getChildren().addAll(tfMi, new Label("Last Name:"),
+      new TextField());
+    
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(pane, 200, 250);
+    primaryStage.setTitle("ShowFlowPane"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+  
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+
+import javafx.application.Application;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+
+public class ShowGridPane extends Application {
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {
+    // Create a pane and set its properties
+    GridPane pane = new GridPane();
+    pane.setAlignment(Pos.CENTER);
+    pane.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
+    pane.setHgap(5.5);
+    pane.setVgap(5.5);
+    
+    // Place nodes in the pane
+    pane.add(new Label("First Name:"), 0, 0);
+    pane.add(new TextField(), 1, 0);
+    pane.add(new Label("MI:"), 0, 1); 
+    pane.add(new TextField(), 1, 1);
+    pane.add(new Label("Last Name:"), 0, 2);
+    pane.add(new TextField(), 1, 2);
+    Button btAdd = new Button("Add Name");
+    pane.add(btAdd, 1, 3);
+    GridPane.setHalignment(btAdd, HPos.RIGHT);
+    
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(pane);
+    primaryStage.setTitle("ShowGridPane"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+  
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+} 
+
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+
+public class ShowBorderPane extends Application {
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {
+    // Create a border pane 
+    BorderPane pane = new BorderPane();
+
+    // Place nodes in the pane
+    pane.setTop(new CustomPane("Top")); 
+    pane.setRight(new CustomPane("Right"));
+    pane.setBottom(new CustomPane("Bottom"));
+    pane.setLeft(new CustomPane("Left"));
+    pane.setCenter(new CustomPane("Center")); 
+    
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(pane);
+    primaryStage.setTitle("ShowBorderPane"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+} 
+
+// Define a custom pane to hold a label in the center of the pane
+class CustomPane extends StackPane {
+  public CustomPane(String title) {
+    getChildren().add(new Label(title));
+    setStyle("-fx-border-color: red");
+    setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
+  }
+}
+
+
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+public class ShowHBoxVBox extends Application {
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {
+    // Create a border pane 
+    BorderPane pane = new BorderPane();
+
+    // Place nodes in the pane
+    pane.setTop(getHBox()); 
+    pane.setLeft(getVBox());
+    
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(pane);
+    primaryStage.setTitle("ShowHBoxVBox"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+  
+  private HBox getHBox() {
+    HBox hBox = new HBox(15); 
+    hBox.setPadding(new Insets(15, 15, 15, 15));
+    hBox.setStyle("-fx-background-color: gold");
+    hBox.getChildren().add(new Button("Computer Science"));
+    hBox.getChildren().add(new Button("Chemistry"));
+    ImageView imageView = new ImageView(new Image("image/us.gif"));
+    hBox.getChildren().add(imageView);
+    return hBox;
+  }
+  
+  private VBox getVBox() {
+    VBox vBox = new VBox(15);
+    vBox.setPadding(new Insets(15, 5, 5, 5));
+    vBox.getChildren().add(new Label("Courses"));
+    
+    Label[] courses = {new Label("CSCI 1301"), new Label("CSCI 1302"), 
+        new Label("CSCI 2410"), new Label("CSCI 3720")};
+
+    for (Label course: courses) {
+      VBox.setMargin(course, new Insets(0, 0, 0, 15));
+      vBox.getChildren().add(course);
+    }
+    
+    return vBox;
+  }
+  
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+} 
+
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.geometry.Insets;
+import javafx.stage.Stage;
+import javafx.scene.text.Text;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.FontPosture;
+
+public class ShowText extends Application {
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {
+    // Create a pane to hold the texts
+    Pane pane = new Pane();
+    pane.setPadding(new Insets(5, 5, 5, 5));
+    Text text1 = new Text(20, 20, "Programming is fun");
+    text1.setFont(Font.font("Courier", FontWeight.BOLD, 
+      FontPosture.ITALIC, 15));
+    pane.getChildren().add(text1);     
+
+    Text text2 = new Text(60, 60, "Programming is fun\nDisplay text");
+    pane.getChildren().add(text2);     
+
+    Text text3 = new Text(10, 100, "Programming is fun\nDisplay text");
+    text3.setFill(Color.RED);
+    text3.setUnderline(true);
+    text3.setStrikethrough(true);    
+    pane.getChildren().add(text3); 
+    
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(pane);
+    primaryStage.setTitle("ShowText"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+  
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.scene.shape.Line;
+
+public class ShowLine extends Application {
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {   
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(new LinePane(), 200, 200);
+    primaryStage.setTitle("ShowLine"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+}
+
+class LinePane extends Pane {
+  public LinePane() {
+    Line line1 = new Line(10, 10, 10, 10);
+    line1.endXProperty().bind(widthProperty().subtract(10));
+    line1.endYProperty().bind(heightProperty().subtract(10));
+    line1.setStrokeWidth(5);
+    line1.setStroke(Color.GREEN);
+    getChildren().add(line1);
+    
+    Line line2 = new Line(10, 10, 10, 10);
+    line2.startXProperty().bind(widthProperty().subtract(10));
+    line2.endYProperty().bind(heightProperty().subtract(10));
+    line2.setStrokeWidth(5);
+    line2.setStroke(Color.GREEN);
+    getChildren().add(line2);
+  }
+}
+
+import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.scene.text.Text;
+import javafx.scene.shape.Rectangle;
+
+public class ShowRectangle extends Application {
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {       
+    // Create rectangles 
+    Rectangle r1 = new Rectangle(25, 10, 60, 30);
+    r1.setStroke(Color.BLACK);
+    r1.setFill(Color.WHITE);    
+    Rectangle r2 = new Rectangle(25, 50, 60, 30);    
+    Rectangle r3 = new Rectangle(25, 90, 60, 30);
+    r3.setArcWidth(15);
+    r3.setArcHeight(25);    
+    
+    // Create a group and add nodes to the group
+    Group group = new Group();
+    group.getChildren().addAll(new Text(10, 27, "r1"), r1, 
+      new Text(10, 67, "r2"), r2, new Text(10, 107, "r3"), r3);
+    
+    for (int i = 0; i < 4; i++) {
+      Rectangle r = new Rectangle(100, 50, 100, 30);
+      r.setRotate(i * 360 / 8);
+      r.setStroke(Color.color(Math.random(), Math.random(), 
+        Math.random()));
+      r.setFill(Color.WHITE);
+      group.getChildren().add(r);
+    }
+    
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(new BorderPane(group), 250, 150);
+    primaryStage.setTitle("ShowRectangle"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+  
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.scene.shape.Ellipse;
+
+public class ShowEllipse extends Application {
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {   
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(new MyEllipse(), 300, 200);
+    primaryStage.setTitle("ShowEllipse"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+  
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+class MyEllipse extends Pane {
+  private void paint() {
+    getChildren().clear();
+    for (int i = 0; i < 16; i++) {
+      // Create an ellipse and add it to pane
+      Ellipse e1 = new Ellipse(getWidth() / 2, getHeight() / 2, 
+        getWidth() / 2 - 50, getHeight() / 2 - 50);
+      e1.setStroke(Color.color(Math.random(), Math.random(),
+        Math.random()));
+      e1.setFill(Color.WHITE);
+      e1.setRotate(i * 180 / 16);
+      getChildren().add(e1);
+    }
+  }
+  
+  @Override
+  public void setWidth(double width) {
+    super.setWidth(width);
+    paint();
+  }
+  
+  @Override
+  public void setHeight(double height) {
+    super.setHeight(height);
+    paint();
+  }
+}
+
+
+ 
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.Group;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.scene.shape.Arc;
+import javafx.scene.shape.ArcType;
+import javafx.scene.text.Text;
+
+public class ShowArc extends Application {
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {   
+    Arc arc1 = new Arc(150, 100, 80, 80, 30, 35); // Create an arc
+    arc1.setFill(Color.RED); // Set fill color
+    arc1.setType(ArcType.ROUND); // Set arc type
+    
+    Arc arc2 = new Arc(150, 100, 80, 80, 30 + 90, 35);
+    arc2.setFill(Color.WHITE);
+    arc2.setType(ArcType.OPEN);
+    arc2.setStroke(Color.BLACK);
+
+    Arc arc3 = new Arc(150, 100, 80, 80, 30 + 180, 35);
+    arc3.setFill(Color.WHITE);
+    arc3.setType(ArcType.CHORD);
+    arc3.setStroke(Color.BLACK);
+    
+    Arc arc4 = new Arc(150, 100, 80, 80, 30 + 270, 35);
+    arc4.setFill(Color.GREEN);
+    arc4.setType(ArcType.CHORD);
+    arc4.setStroke(Color.BLACK);
+    
+    // Create a group and add nodes to the group
+    Group group = new Group();
+    group.getChildren().addAll(new Text(210, 40, "arc1: round"), 
+      arc1, new Text(20, 40, "arc2: open"), arc2,
+      new Text(20, 170, "arc3: chord"), arc3, 
+      new Text(210, 170, "arc4: chord"), arc4);      
+
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(new BorderPane(group), 300, 200);
+    primaryStage.setTitle("ShowArc"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+  
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+ 
+import javafx.application.Application;
+import javafx.collections.ObservableList;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.scene.shape.Polygon;
+
+public class ShowPolygon extends Application {
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {   
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(new MyPolygon(), 400, 400);
+    primaryStage.setTitle("ShowPolygon"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+  
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+class MyPolygon extends Pane {
+  private void paint() {
+    // Create a polygon and place polygon to pane
+    Polygon polygon = new Polygon();
+    polygon.setFill(Color.WHITE);
+    polygon.setStroke(Color.BLACK);
+    ObservableList<Double> list = polygon.getPoints();
+    
+    double centerX = getWidth() / 2, centerY = getHeight() / 2;
+    double radius = Math.min(getWidth(), getHeight()) * 0.4;
+
+    // Add points to the polygon list
+    for (int i = 0; i < 6; i++) {
+      list.add(centerX + radius * Math.cos(2 * i * Math.PI / 6)); 
+      list.add(centerY - radius * Math.sin(2 * i * Math.PI / 6));
+    }     
+    
+    getChildren().clear();
+    getChildren().add(polygon); 
+  }
+  
+  @Override
+  public void setWidth(double width) {
+    super.setWidth(width);
+    paint();
+  }
+  
+  @Override
+  public void setHeight(double height) {
+    super.setHeight(height);
+    paint();
+  }
+}
+
+  
+import java.util.Calendar; 
+import java.util.GregorianCalendar;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.text.Text;
+
+public class ClockPane extends Pane {
+  private int hour;
+  private int minute;
+  private int second;
+  
+  /** Construct a default clock with the current time*/
+  public ClockPane() {
+    setCurrentTime();
+  }
+
+  /** Construct a clock with specified hour, minute, and second */
+  public ClockPane(int hour, int minute, int second) {
+    this.hour = hour;
+    this.minute = minute;
+    this.second = second;
+  }
+
+  /** Return hour */
+  public int getHour() {
+    return hour;
+  }
+
+  /** Set a new hour */
+  public void setHour(int hour) {
+    this.hour = hour;
+    paintClock();
+  }
+
+  /** Return minute */
+  public int getMinute() {
+    return minute;
+  }
+
+  /** Set a new minute */
+  public void setMinute(int minute) {
+    this.minute = minute;
+    paintClock();
+  }
+
+  /** Return second */
+  public int getSecond() {
+    return second;
+  }
+
+  /** Set a new second */
+  public void setSecond(int second) {
+    this.second = second;
+    paintClock();
+  }
+  
+  /* Set the current time for the clock */
+  public void setCurrentTime() {
+    // Construct a calendar for the current date and time
+    Calendar calendar = new GregorianCalendar();
+
+    // Set current hour, minute and second
+    this.hour = calendar.get(Calendar.HOUR_OF_DAY);
+    this.minute = calendar.get(Calendar.MINUTE);
+    this.second = calendar.get(Calendar.SECOND);
+    
+    paintClock(); // Repaint the clock
+  }
+  
+  /** Paint the clock */
+  private void paintClock() {
+    // Initialize clock parameters
+    double clockRadius = 
+      Math.min(getWidth(), getHeight()) * 0.8 * 0.5;
+    double centerX = getWidth() / 2;
+    double centerY = getHeight() / 2;
+
+    // Draw circle
+    Circle circle = new Circle(centerX, centerY, clockRadius);
+    circle.setFill(Color.WHITE);
+    circle.setStroke(Color.BLACK);
+    Text t1 = new Text(centerX - 5, centerY - clockRadius + 12, "12");
+    Text t2 = new Text(centerX - clockRadius + 3, centerY + 5, "9");
+    Text t3 = new Text(centerX + clockRadius - 10, centerY + 3, "3");
+    Text t4 = new Text(centerX - 3, centerY + clockRadius - 3, "6");
+    
+    // Draw second hand
+    double sLength = clockRadius * 0.8;
+    double secondX = centerX + sLength * 
+      Math.sin(second * (2 * Math.PI / 60));
+    double secondY = centerY - sLength * 
+      Math.cos(second * (2 * Math.PI / 60));
+    Line sLine = new Line(centerX, centerY, secondX, secondY);
+    sLine.setStroke(Color.RED);
+
+    // Draw minute hand
+    double mLength = clockRadius * 0.65;
+    double xMinute = centerX + mLength * 
+      Math.sin(minute * (2 * Math.PI / 60));
+    double minuteY = centerY - mLength * 
+      Math.cos(minute * (2 * Math.PI / 60));
+    Line mLine = new Line(centerX, centerY, xMinute, minuteY);
+    mLine.setStroke(Color.BLUE);
+    
+    // Draw hour hand
+    double hLength = clockRadius * 0.5;
+    double hourX = centerX + hLength * 
+      Math.sin((hour % 12 + minute / 60.0) * (2 * Math.PI / 12));
+    double hourY = centerY - hLength *
+      Math.cos((hour % 12 + minute / 60.0) * (2 * Math.PI / 12));
+    Line hLine = new Line(centerX, centerY, hourX, hourY);
+    hLine.setStroke(Color.GREEN);
+    
+    getChildren().clear();  
+    getChildren().addAll(circle, t1, t2, t3, t4, sLine, mLine, hLine);
+  }
+  
+  @Override
+  public void setWidth(double width) {
+    super.setWidth(width);
+    paintClock();
+  }
+  
+  @Override
+  public void setHeight(double height) {
+    super.setHeight(height);
+    paintClock();
+  }
+}
+
+ 
+import javafx.application.Application;
+import javafx.geometry.Pos;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+
+public class DisplayClock extends Application {
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {
+    // Create a clock and a label
+    ClockPane clock = new ClockPane();
+    String timeString = clock.getHour() + ":" + clock.getMinute() 
+      + ":" + clock.getSecond();
+    Label lblCurrentTime = new Label(timeString);
+
+    // Place clock and label in border pane
+    BorderPane pane = new BorderPane();
+    pane.setCenter(clock);
+    pane.setBottom(lblCurrentTime);
+    BorderPane.setAlignment(lblCurrentTime, Pos.TOP_CENTER);
+
+    // Create a scene and place it in the stage
+    Scene scene = new Scene(pane, 250, 250);
+    primaryStage.setTitle("DisplayClock"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+}
+
+

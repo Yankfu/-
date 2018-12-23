@@ -1,0 +1,9 @@
+package com.introduction_to_java_programming;
+
+public class P280Chapter_7_21 
+{
+	public static void main(String[] args)
+	{
+		int a,b,c,d,e,f,g,h,i,j,k,l,m,n;
+	}
+}

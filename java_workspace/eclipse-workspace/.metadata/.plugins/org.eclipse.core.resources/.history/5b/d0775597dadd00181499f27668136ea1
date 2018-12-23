@@ -1,0 +1,69 @@
+import java.util.Scanner;
+public class P280Chapter_7_21 {
+	int ball,slot;
+	int[] slots;
+	String []road;
+	
+    public P280Chapter_7_21(int b,int s) {
+    	ball=b;slot=s;
+    	slots=new int[s];
+    	road=new String[b];
+    }
+    
+    public void run(){
+    	double mid;
+    	for(int i=0;i<ball;i++){
+    		mid=((double)slot-1)/2;
+    		road[i]=new String();
+    		for(int j=0;j<slot-1;j++){
+    			if(Math.random()>0.5){
+    				mid+=0.5;
+    				road[i]+="R";
+    			}
+    			else{
+    				mid-=0.5;
+    				road[i]+="L";
+    			}		
+    		}
+    		slots[(int)mid]++;
+    	}
+    }
+    
+    public void ShowRoad(){
+    	for (int i = 0; i < ball; i++)
+    		System.out.println(road[i]);
+    }
+    
+    public void ShowMachine(){
+    	String str;
+    	int flag;
+		for (int i = ball; i > 0; i--) {     //模拟二维数组，当count[j]超过i，证明此行此列存在值 
+			flag = 0;
+			str="";
+			for (int j = 0; j < slot; j++) {
+				if (slots[j] >= i) {
+					str += "O";
+					flag = 1;
+				}
+				else
+					str+=" ";
+			}
+			if (flag==1)                         //使用str以及flag为了去除多余的空行
+				System.out.println(str);
+		}
+    }
+    
+    public static void main(String[] args) {
+    	int ball,solt;
+    	Scanner Input=new Scanner(System.in);
+    	System.out.print("Enter the number of balls to drop : ");
+    	ball=Input.nextInt();
+    	System.out.print("Enter the number of slots in the bean machine : ");
+    	solt=Input.nextInt();
+    	P280Chapter_7_21 My=new P280Chapter_7_21(ball,solt);
+    	My.run();
+    	My.ShowRoad();
+    	My.ShowMachine();
+    	
+    }
+}
