@@ -1,0 +1,5 @@
+huffman_code	     存储用户第一次输入后翻译完成的哈夫曼编码
+huffman_num	     存储用户第二次输入的哈夫曼码
+huffman_test 	     存储用户第一次输入的要翻译的内容
+huffman_test_next       存储第二次用户输入哈夫曼编译码翻译完成后的内容
+huffman_tree	     存储哈夫曼树及每个字符的哈夫曼码

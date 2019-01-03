@@ -1,0 +1,1 @@
+Data structure is the way of computer storage and organization data. A data structure is a collection of data elements that exist between one or more specific relationships.
