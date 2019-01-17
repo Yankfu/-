@@ -3,8 +3,8 @@
 #include <windows.h>
 #include <time.h> 
 
-#define Height 9
-#define Width 9
+#define Height 11 
+#define Width 11 
 #define START_I 2 
 #define START_J 1
 #define END_I Height-1 
@@ -203,8 +203,9 @@ int main(void)
 	//迷宫
 	int i, j;
 	
-	//生成随机迷宫 
-	{ 
+	
+	printf("正在生成迷宫，请输入任意键确认。");
+	getchar(); 
 	srand((unsigned)time(NULL));
 		
 	for(i=0;i<=Height+1;i++)
@@ -225,7 +226,7 @@ int main(void)
 //        maze[0][j]=Wall;
 //        maze[Height+1][j]=Wall;
 //    }
-	} 
+	
 	
 
 	//定义路径数组,将到(x,y)点的路径保存进数组
@@ -255,6 +256,9 @@ int main(void)
 		}
 		printf("\n");
 	}
+	
+	printf("迷宫生成成功！正在解密迷宫，请输入任意键确定。");
+	getchar(); 
 	printf("\n");
 	FILE *fp;
 	char filename[50];
@@ -300,6 +304,10 @@ int main(void)
 		printf("\n");
 	}
 	printf("\n");
+	
+	
+	
+	
 	FILE *fp1;
 	char filename1[50];
 	strcpy(filename1,"maze_path.txt");
@@ -313,6 +321,11 @@ int main(void)
 		fprintf(fp1,"\n");
 	}
 	fclose(fp1);
+	
+	
+	
+	
+	
 	return 0;
 }
 

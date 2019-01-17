@@ -316,7 +316,7 @@ void chartocode(charcode c,char s[],HuffmanCode hc)
     }
     printf("\n");   
     fclose(fp);
-    printf("翻译完成！\n"); 
+//    printf("翻译完成！\n"); 
 }
 
 
@@ -364,9 +364,34 @@ int main(int argc,char *argv[])
 	char data[MAXINT]; 
 	int fno,fsize;
 	char prec;
-	printf("请输入要打开的文件的完整路径及文件名：");
+//	printf("请输入要打开的文件的完整路径及文件名：");
 //	gets(filename);
 	strcpy(filename,"huffman_test.txt");
+	
+	printf("请选择用文件打开还是自己输入：（w(文件打开)/z(自己输入)）\n");
+	char wenjian=getchar(); 
+	if(wenjian=='w'||wenjian=='W')
+	{
+	fp1=fopen(filename,"rt");
+	if(fp1==NULL)
+	{
+		printf("\n打开文件失败，%s可能不存在\n",filename);
+		exit(1);	
+	}
+	fno=fileno(fp1);
+	printf("\n%s文件打开！\n",filename);
+	i=0; 
+//	//写文件
+//	printf("请输入要翻译的哈夫曼编码：\n");
+//	gets(data);//不能输入回车 
+//	for(i=0;i<strlen(data);i++) 
+//	{
+//		fputc(data[i],fp1);
+//	}
+	fclose(fp1);
+	}
+	else
+	{
 	fp1=fopen(filename,"wt+");
 	if(fp1==NULL)
 	{
@@ -384,6 +409,7 @@ int main(int argc,char *argv[])
 		fputc(data[i],fp1);
 	}
 	fclose(fp1);
+	}
 	fp1=fopen(filename,"rt"); //重新打开文件，让指针回到头 
 	i=0;
 	while((prec=fgetc(fp1))!=EOF)//最后用eof作为结尾 
@@ -405,19 +431,26 @@ int main(int argc,char *argv[])
 	
 	tongjicishu(ht,c);
 	CrtHuffmanTree(ht,N);
+	printf("\n是否显示哈夫曼编码（Y/N）？\n");
+	char shifou;
+	shifou=getch();
+	if(shifou=='Y'||shifou=='y')
+	{ 
+	for(i=0;i<2*N-1;i++)
+	{
+		if(i<N) printf("%c   ",s[i]);
+		printf("%-5d",i);
+		printf("%-10d %-10d %-10d %-10d\n",ht[i].weight,ht[i].parent,ht[i].Lchild,ht[i].Rchild);
+	}
+	}
 	
-//	for(i=0;i<2*N-1;i++)
-//	{
-//		if(i<N) printf("%c   ",s[i]);
-//		printf("%-5d",i);
-//		printf("%-10d %-10d %-10d %-10d\n",ht[i].weight,ht[i].parent,ht[i].Lchild,ht[i].Rchild);
-//	}
+	
 	
 	CrtHuffmanCode(ht,hc,N);
 //	printcode(s,hc);
 	chartocode(c,s,hc);
 	
-	
+	 
 	
 	FILE *fp;
 	char filename1[100];
@@ -430,6 +463,7 @@ int main(int argc,char *argv[])
 		ns[i]=prenum;
 		i++;
 	}
+	printf("\n翻译完成！"); 
 	numtochar(ns,ht,s);
 	fclose(fp);
 }
